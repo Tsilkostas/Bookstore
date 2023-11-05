@@ -1,0 +1,134 @@
+{% extends "store/base.html" %}
+{% load static %}
+{% block title %}
+<div class="pb-3"><h1 class="h3">{{ product.name }}</h1></div>
+{% endblock %}
+{% block content %}
+
+
+<main class="pt-2">
+
+    <div class="container" style="max-width: 1000px">
+
+        {% if messages %}
+        <div class="alert alert-warning" alert-"{{ message.tags }}" role="alert">
+            {% for message in messages %}
+            {{message|safe}} - <a href="{% url 'account:wishlist' %}" class="alert-link">Your Wishlist</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    
+        <div class="row g-3">
+          
+            <div class="col-md-5 ps-3 col-lg-5 order-md-last p-0 order-1">
+                <div class="d-grid gap-2">
+                    
+                    <div><span class="h3">€{{ product.price }}</span>
+                        <p class="text-muted">Ebook</p>
+                    </div>
+               
+                    <div class="">
+                        <label for="select">Qty</label>
+                        <select id="select" class="h6" style="width:50px;height:40px;">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                        </select>
+                        <div><textarea readonly class="form-control" id="exampleFormControlTextarea3"
+                                rows="7">{{ product.description }}</textarea></div>
+                    </div>
+                    <hr>
+                    <button type="button" id="add-button" value="{{product.id}}" class="btn btn-success fw500">Add to
+                        basket</button>
+                        <a href="{% url 'account:user_wishlist' product.id  %}" class="btn btn-light fw500" role="button" aria-disabled="true" id="add-button2" >Add to Favorites</a>
+                    <hr>
+                </div>
+            </div>
+
+            <div class="col-md-7 col-lg-7 p-0">
+                <div class="card mb-3 border-0">
+                    <div class="row g-0">
+                        <div class="col-md-12">
+                            <div class="card-body p-1">
+                                <h1 class="mb-0 h2 pe-4 pb-4">{{ product.title }}</h1>
+                                <div class="bg-light"><img class="img-fluid mx-auto d-block img-thumbnail" width="200px"
+                                        alt="Responsive image" src="{{ product.image.url }}"> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<script>
+    $(document).on('click', '#add-button', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url "basket:basket_add" %}',
+            data: {
+                productid: $('#add-button').val(),
+                productqty: $('#select option:selected').text(),
+                csrfmiddlewaretoken: "{{csrf_token}}",
+                action: 'post'
+            },
+            success: function (json) {
+                document.getElementById("basket-qty").innerHTML = json.qty
+            },
+            error: function (xhr, errmsg, err) { }
+        });
+    })
+</script>
+
+{% block footer %}
+<div class= "jumbotron jumbotron-fluid bg-dark p-4 mt-5 mb-0" style = "position: fixed;height: 100px;bottom: 0;width: 100%;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 cizgi">
+                <div class="card bg-dark border-0">
+                    <div class="card-body text-light text-center">
+                        <h5 class="card-title text-white display-4" style="font-size:20px">BookStore</h5>
+                    <p class="d-inline lead">Team Les Miserables © 2022<br>
+                    <a href="#" class="text-light d-block lead">Blog</a>
+                    </p>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 cizgi">
+                <div class="card bg-dark border-0">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-white display-4" style="font-size:20px">Contact Us</h5>
+                        <a class="text-light d-block lead" style="margin-left: -20px" href="#"><i class="fa fa-phone mr-2"></i>+90 (123) 456 7 899</a>
+                        <a class="text-light d-block lead" href="#"><i class="fa fa-envelope mr-2"></i>admin@localhost.com</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                <div class="card bg-dark border-0">
+                    <div class="card-body text-center">
+                    <h5 class="card-title text-white display-4" style="font-size:20px">Social Media</h5>
+            
+                            <a class="text-light" href="#"><i class="fa fa-facebook-square fa-fw fa-2x"></i></a>
+                        
+                            <a class="text-light" href="#"><i class="fa fa-twitter-square fa-fw fa-2x"></i></a>
+                        
+                            <a class="text-light" href="#"><i class="fa fa-instagram fa-fw fa-2x"></i></a>
+                        
+                            <a class="text-light" href="#"><i class="fa fa-linkedin fa-fw fa-2x"></i></a>
+                        
+                    </div>
+                </div>
+            </div>	
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% endblock %}

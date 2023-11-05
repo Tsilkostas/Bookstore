@@ -1,0 +1,51 @@
+{% extends "../../store/base.html" %} {% load static %} {% block title %}Basket Summary{%endblock %} {% block content %}
+
+<style>
+  #order_table {
+    margin: auto;
+    width: 60% !important; 
+  }
+</style>
+
+<main class="pt-5">
+  <div class="container" style="max-width: 1000px">
+    <h1 class="h2"><i class="fa fa-spinner" aria-hidden="true"></i> Pending orders for <b>{{user.user_name}}</b></h1>
+    <div class="col-12">
+      <div class="col-12 bg-light p-3 d-flex justify-content-between">
+        <div class="d-flex d-flex-inline">
+      
+    </div>
+    <div class="text-end">
+    </div>
+  <div class="col-12">
+    <div class="col-12 d-flex justify-content-between">
+    <div class="jumbotron">
+      
+      
+    </div>
+            <table class="table-sm" id = "order_table">
+              <thead>
+                <tr>
+                  <th scope="col">Orders</th>
+                  <th scope="col">Price</th>
+                </tr>
+              </thead>
+              {% for item in basket %} 
+              {% with product=item.product %}
+              <tbody>
+                <tr>
+                  <td><a class="link-dark" href="{{item.product.get_absolute_url}}" >
+                  {{product.title}} - {{product.author}}
+                  </a></td>
+                  <td>{{product.price}}</td>
+                
+                </tr>
+                {% endwith %} 
+                {% endfor %}
+                <td></td>
+                <td><b>Total: {{basket.get_total_price}}</b> </td>
+              </tbody>
+            </table>
+          </div>
+        </main>
+            {% endblock %}

@@ -1,0 +1,6 @@
+virtual enviroment
+django
+rest framework
+rest jason api
+pillow
+paypal-checkout-serversdk

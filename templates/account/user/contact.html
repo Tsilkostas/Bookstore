@@ -1,0 +1,34 @@
+{% extends "../../store/base.html" %}
+{% load static %} 
+{% block title %}Contact Us{% endblock %}
+{% block content %}
+
+        
+
+    
+    <div class="row no-gutter">
+        <div class="col-md-12">
+            <div class="login d-flex align-items-center py-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-lg-7  mx-auto">
+                            <form class="account-form p-4 rounded" action="{% url 'account:contact' %}" method="post">
+
+                                {% csrf_token %}
+                                <div class = "container" style = "background-color:lemonchiffon;">
+                                <h3 class="mb-4"> Contact Form</h3>
+                                <p ><b>Have a question or want further information? </b></p><p>Please fill in your name, email address and a message below reporting any problems/inquiries.
+                                    One of our staff members will be happy to contact you as soon as possible.</p>
+                                </div>
+                                 <br>
+                                {% csrf_token %}
+                                 {{form.as_p}}
+                                 <button class="btn btn-primary py-2 mb-4 mt-5 fw-bold" type="submit"  >Submit</button>
+                                </form>
+    </div>
+</div>
+</div>
+</div>
+
+
+{% endblock %}
